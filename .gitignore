@@ -1,0 +1,5 @@
+# ignore  bootstrap icons
+**/bootstrap-icons*/
+# ignore all bootstrap files
+**/bootstrap*.css
+**/bootstrap*.js
