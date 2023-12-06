@@ -22,5 +22,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('WebDocumentTracker.urls')),
+    path('login/', views.CustomLoginView.as_view(), name='login'),
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

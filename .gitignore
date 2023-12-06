@@ -3,3 +3,5 @@
 # ignore all bootstrap files
 **/bootstrap*.css
 **/bootstrap*.js
+# ignore jquery
+**/code.jquery*.js
