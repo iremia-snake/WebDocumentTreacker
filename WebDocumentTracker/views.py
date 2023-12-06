@@ -10,6 +10,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 from WebDocumentTracker.forms import ProfileForm, EditProfileForm
+from django.contrib.auth import logout
 class CustomLoginView(LoginView):
     authentication_form = LoginForm
     template_name = 'WebDocumentTracker/login.html'
@@ -64,3 +65,7 @@ def index(request):
     data = {
     }
     return render(request, 'WebDocumentTracker/index.html', data)
+
+def logoutMethod(request):
+    logout(request)
+    return redirect('login')

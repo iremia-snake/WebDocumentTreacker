@@ -5,3 +5,5 @@
 **/bootstrap*.js
 # ignore jquery
 **/code.jquery*.js
+
+**/staticfiles/

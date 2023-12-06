@@ -50,7 +50,7 @@
                 <div class="mx-2 me-0 ">
                     {% if user.is_authenticated %}
                         <a href="{% url 'userpage' %}" class="text-test">{{user.username|title}}
-{#                            <img src="{{ usericon }}" alt="" height="36px" class="rounded-5">#}
+                            <img src="{{ user.profile.profile_pic.url }}" alt="" height="36px" width="36px" class="rounded-5 d-inline-block " >
                         </a>
                     {% else %}
                         <div class="rounded-5 text-center alert-test" style="width: 36px; height: 36px; font-size: 30px; line-height: 36px">
