@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
@@ -13,7 +13,8 @@ from WebDocumentTracker.forms import ProfileForm, EditProfileForm
 from django.contrib.auth import logout
 from django.utils.decorators import method_decorator
 
-
+def Admin(request):
+    pass
 class CustomLoginView(LoginView):
     authentication_form = LoginForm
     template_name = 'WebDocumentTracker/login.html'
@@ -34,6 +35,7 @@ class CustomLoginView(LoginView):
 def userpage(request):
 	user_form = EditProfileForm(instance=request.user)
 	profile_form = ProfileForm(instance=request.user.profile)
+
 	return render(request=request, template_name="WebDocumentTracker/user_profile.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form })
 
 class CreateProfilePageView(CreateView):
