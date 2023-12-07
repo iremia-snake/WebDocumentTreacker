@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, request
 from django.contrib.auth.forms import UserCreationForm
@@ -33,11 +34,26 @@ class CustomLoginView(LoginView):
 #         context['page_user'] = page_user
 #         return context
 def userpage(request):
-	user_form = EditProfileForm(instance=request.user)
-	profile_form = ProfileForm(instance=request.user.profile)
+    if request.method == "POST":
+        user_form = EditProfileForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request, 'Your wishlist was successfully updated!')
+        else:
+            messages.error(request, 'Unable to complete request')
+        return redirect("home")
 
-	return render(request=request, template_name="WebDocumentTracker/user_profile.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form })
-
+    user_form = EditProfileForm(instance=request.user)
+    profile_form = ProfileForm(instance=request.user.profile)
+    return render(
+        request=request,
+        template_name="WebDocumentTracker/user_profile.html",
+        context={"user": request.user, "user_form": user_form, "profile_form": profile_form}
+    )
 class CreateProfilePageView(CreateView):
     model = Profile
 
@@ -53,7 +69,7 @@ class CreateProfilePageView(CreateView):
 class UserEditView(UpdateView):
     form_class = EditProfileForm
     template_name = 'WebDocumentTracker/edit_profile.html'
-    success_url = reverse_lazy('tasks')
+    success_url = reverse_lazy('home')
 
     def get_object(self):
         return self.request.user
