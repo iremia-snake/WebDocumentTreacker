@@ -2,5 +2,21 @@
 {% load static %}
 {% block title %} Главная страница {% endblock %}
 {% block content %}
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <table class="col-12">
+        <tr>
+            <th>Автор документа</th>
+            <th>Дата составления</th>
+            <th>Тип документа</th>
+            <th>PDF Файл</th>
+        </tr>
+        {% for i in elements %}
+            <tr>
+                <td>Фамилия И.О.</td>
+                <td>дата{{ i }}</td>
+                <td>Тип документа</td>
+                <td>PDF Файл</td>
+            </tr>
+        {% endfor %}
+    </table>
+{#    {% include 'WebDocumentTracker/includes/element.html' %}#}
 {% endblock %}

@@ -12,6 +12,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 from WebDocumentTracker.forms import ProfileForm, EditProfileForm
 from django.contrib.auth import logout
+from django.core.paginator import Paginator, EmptyPage
 from django.utils.decorators import method_decorator
 
 def Admin(request):
@@ -36,7 +37,7 @@ class CustomLoginView(LoginView):
 def userpage(request):
     if request.method == "POST":
         user_form = EditProfileForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if user_form.is_valid():
             user_form.save()
             messages.success(request, 'Your profile was successfully updated!')
@@ -83,7 +84,16 @@ def about(request):
 
 
 def index(request):
+    elements = [i for i in range(38)]
+    entries_per_page = 10
+    page_number = request.GET.get('page', 1)
+    paginator = Paginator(elements, entries_per_page)
+    try:
+        result = paginator.page(page_number)
+    except EmptyPage:
+        result = paginator.page(paginator.num_pages)
     data = {
+        'elements' : elements,
     }
     return render(request, 'WebDocumentTracker/index.html', data)
 
